@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-freshtrack}
+      POSTGRES_USER: ${POSTGRES_USER:-freshtrack}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-freshtrack_local_only}
+    ports:
+      - "${POSTGRES_PORT:-55435}:5432"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""
+        ]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - freshtrack-postgres:/var/lib/postgresql
+
+volumes:
+  freshtrack-postgres:

@@ -1,0 +1,14 @@
+node_modules/
+.pnpm-store/
+.env
+.env.*
+!.env.example
+dist/
+coverage/
+.expo/
+apps/mobile/.expo/
+apps/mobile/android/
+artifacts/*.apk
+*.log
+.DS_Store
+tmp/

@@ -1,0 +1,31 @@
+{
+  "name": "freshtrack",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.17.0",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "build": "pnpm --recursive --if-present run build",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p tsconfig.json && pnpm --recursive run typecheck",
+    "test": "pnpm --recursive run test",
+    "test:integration": "pnpm --filter @freshtrack/api run test:integration",
+    "db:up": "docker compose up -d --wait postgres",
+    "db:down": "docker compose down",
+    "db:migrate": "pnpm --filter @freshtrack/api run db:migrate",
+    "db:generate": "pnpm --filter @freshtrack/api run db:generate",
+    "api:dev": "pnpm --filter @freshtrack/api run dev",
+    "mobile:start": "pnpm --filter @freshtrack/mobile run start",
+    "mobile:config": "pnpm --filter @freshtrack/mobile run config"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.2",
+    "@types/node": "24.10.1",
+    "eslint": "9.39.2",
+    "globals": "16.5.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.53.1"
+  }
+}

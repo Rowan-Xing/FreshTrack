@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(uuid()) @db.Uuid
+  email        String        @unique @db.VarChar(254)
+  passwordHash String        @map("password_hash") @db.VarChar(255)
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  sessions     AuthSession[]
+  foods        Food[]
+
+  @@map("users")
+}
+
+enum FoodCategory {
+  PRODUCE
+  MEAT_EGGS_SEAFOOD
+  DAIRY
+  STAPLES
+  SNACKS_DRINKS
+  CONDIMENTS
+  OTHER
+
+  @@map("food_category")
+}
+
+enum FoodStatus {
+  ACTIVE
+  EATEN
+  DISCARDED
+
+  @@map("food_status")
+}
+
+model Food {
+  id              String       @id @default(uuid()) @db.Uuid
+  userId          String       @map("user_id") @db.Uuid
+  name            String       @db.VarChar(100)
+  category        FoodCategory
+  quantity        Decimal      @db.Decimal(18, 3)
+  unit            String       @db.VarChar(20)
+  expiryDate      DateTime     @map("expiry_date") @db.Date
+  reminderEnabled Boolean      @default(true) @map("reminder_enabled")
+  notes           String?      @db.VarChar(500)
+  status          FoodStatus   @default(ACTIVE)
+  processedAt     DateTime?    @map("processed_at") @db.Timestamptz(3)
+  createdAt       DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status, expiryDate, id])
+  @@index([userId, status, createdAt, id])
+  @@index([userId, status, processedAt, id])
+  @@map("foods")
+}
+
+model AuthSession {
+  id        String    @id @default(uuid()) @db.Uuid
+  tokenHash String    @unique @map("token_hash") @db.Char(64)
+  userId    String    @map("user_id") @db.Uuid
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz(3)
+  revokedAt DateTime? @map("revoked_at") @db.Timestamptz(3)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, revokedAt])
+  @@index([expiresAt])
+  @@map("auth_sessions")
+}

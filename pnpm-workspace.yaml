@@ -1,0 +1,30 @@
+packages:
+  - apps/*
+  - packages/*
+
+allowBuilds:
+  '@prisma/client': true
+  '@prisma/engines': true
+  argon2: true
+  esbuild: true
+  prisma: true
+
+minimumReleaseAgeExclude:
+  - expo-dev-client@57.0.10
+  - expo-dev-launcher@57.0.10
+  - expo-dev-menu@57.0.10
+  - '@expo/cli@57.0.11'
+  - '@expo/inline-modules@0.1.4'
+  - '@expo/local-build-cache-provider@57.0.5'
+  - '@expo/log-box@57.0.2'
+  - '@expo/prebuild-config@57.0.10'
+  - babel-preset-expo@57.0.5
+  - expo-asset@57.0.8
+  - expo-constants@57.0.8
+  - expo-modules-core@57.0.8
+  - expo@57.0.9
+  - '@expo/metro-runtime@57.0.8'
+  - '@expo/ui@57.0.8'
+  - expo-notifications@57.0.8
+  - expo-router@57.0.9
+  - zkit-ui@2.0.11

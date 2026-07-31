@@ -1,0 +1,29 @@
+{
+  "name": "@freshtrack/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "lint": "eslint .",
+    "typecheck": "prisma generate && tsc --noEmit",
+    "test": "vitest run --exclude '**/*.integration.test.ts'",
+    "test:integration": "node --import tsx scripts/run-integration.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy"
+  },
+  "dependencies": {
+    "@freshtrack/contracts": "workspace:*",
+    "@hono/node-server": "2.0.11",
+    "@prisma/client": "6.19.2",
+    "argon2": "0.44.0",
+    "hono": "4.12.31",
+    "prisma": "6.19.2",
+    "tsx": "4.21.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "vitest": "4.0.18"
+  }
+}

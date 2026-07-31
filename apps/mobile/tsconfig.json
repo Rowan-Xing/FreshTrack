@@ -1,0 +1,15 @@
+{
+  "extends": ["expo/tsconfig.base", "../../tsconfig.base.json"],
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["vitest/globals"]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ]
+}
+

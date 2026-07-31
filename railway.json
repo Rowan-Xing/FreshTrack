@@ -1,0 +1,29 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "builder": "RAILPACK",
+    "buildCommand": "pnpm db:generate",
+    "watchPatterns": [
+      "apps/api/**",
+      "packages/contracts/**",
+      "package.json",
+      "pnpm-lock.yaml",
+      "pnpm-workspace.yaml",
+      "tsconfig.base.json",
+      "tsconfig.json"
+    ]
+  },
+  "deploy": {
+    "preDeployCommand": ["pnpm db:migrate"],
+    "startCommand": "pnpm --filter @freshtrack/api run start",
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 300,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 3,
+    "multiRegionConfig": {
+      "asia-southeast1-eqsg3a": {
+        "numReplicas": 1
+      }
+    }
+  }
+}
